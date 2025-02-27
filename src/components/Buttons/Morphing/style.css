@@ -1,0 +1,15 @@
+.morph-btn {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background: #ffa502;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+}
+
+.morph-btn:hover {
+  clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+  background: #ff7b00;
+}

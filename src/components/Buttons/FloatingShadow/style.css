@@ -1,0 +1,22 @@
+.floating-btn {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background: #3742fa;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(55, 66, 250, 0.3);
+  }
+  50% {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 25px rgba(55, 66, 250, 0.5);
+  }
+}

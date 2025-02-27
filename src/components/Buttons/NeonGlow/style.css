@@ -1,0 +1,18 @@
+.neon-btn {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  background: transparent;
+  color: #ff6b6b;
+  border: 2px solid #ff6b6b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #ff6b6b;
+  box-shadow: 0 0 5px #ff6b6b, inset 0 0 5px #ff6b6b;
+}
+
+.neon-btn:hover {
+  background: #ff6b6b;
+  color: white;
+  box-shadow: 0 0 20px #ff6b6b, inset 0 0 10px #ff6b6b;
+}

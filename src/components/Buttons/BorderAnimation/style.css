@@ -1,0 +1,47 @@
+.border-animate-btn {
+  padding: 0.5rem;
+  font-size: 1.1rem;
+  background: transparent;
+  color: #333 !important;
+  border: 2px solid transparent;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.8s ease;
+}
+.border-animate-btn:hover {
+  border-right: 2px solid #ff8a47;
+  border-left: 2px solid #ff8a47;
+  border-radius: 4px;
+  
+  color: #e75806 !important;
+
+}
+.border-animate-btn::before,
+.border-animate-btn::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #ff8a47;
+  transition: all 0.8s ease;
+}
+
+.border-animate-btn::before {
+  top: 0;
+  left: 0;
+}
+
+.border-animate-btn::after {
+  bottom: 0;
+  right: 0;
+}
+
+.border-animate-btn:hover::before,
+.border-animate-btn:hover::after {
+  width: 100%;
+}
+.border-animate-btn-active::before,
+.border-animate-btn-active::after
+{
+  width: 100%;
+}
