@@ -1,20 +1,13 @@
 "use client"; // Allowing the use of React hooks
 
-import {
-  Box,
-  Button,
-  Grid,
-  GridItem,
-  Heading,
-  Image,
-  Text,
-} from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-
 import AddProduct from "../_components/Product/Add";
-import { ProductSchema } from "../_models/Product";
+import {
+  Box
+} from "@chakra-ui/react";
 import ProductsItems from "../_components/Product/Items";
-import { signOut } from "next-auth/react";
+import { ProductsProvider } from "../_context/ProductsContext";
+import React from "react";
+import withContextProvider from "../_HOC/withContextProvider";
 
 // Adjust the import path accordingly
 
@@ -29,4 +22,7 @@ const ProductsPage: React.FC = () => {
   );
 };
 
-export default ProductsPage;
+const ProductsPageWithProvider =
+  withContextProvider(ProductsProvider)(ProductsPage);
+
+export default ProductsPageWithProvider;

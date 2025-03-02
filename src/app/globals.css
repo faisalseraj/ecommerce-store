@@ -19,3 +19,209 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+.swiper-slide-active {
+  .carousal-item {
+    justify-content: center;
+  }
+}
+
+.swiper-slide-prev {
+  .carousal-item {
+    justify-content: flex-end;
+  
+  }
+}
+
+.swiper-slide-next {
+  .carousal-item {
+    justify-content: flex-start;
+  
+  }
+}
+.carousal-sale-item {
+  transition: right 0.5s ease-in;
+}
+.swiper-slide-active {
+  position: relative;
+  .carousal-sale-item {
+    position: relative;
+    right: -80px;
+  }
+}
+
+.swiper-slide-prev {
+  position: relative;
+  .carousal-sale-item {
+    position: relative;
+    right: -160px;
+    
+  }
+}
+
+.swiper-slide-next {
+  position: relative;
+  .carousal-sale-item {
+    position: relative;
+    right: 0px;
+   
+  }
+}
+
+
+.images-gallery {
+  direction: ltr !important;
+  .swiper-horizontal
+    > .swiper-pagination-bullets.swiper-pagination-bullets-dynamic,
+  .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic {
+    overflow: visible;
+    width: 100% !important;
+    display: flex;
+    margin: unset;
+    gap: 4px;
+    left: unset;
+    align-items: center;
+    justify-content: center;
+    transform: unset;
+    > span {
+      position: unset !important;
+    }
+  }
+  .swiper-pagination-fraction,
+  .swiper-pagination-custom,
+  .swiper-horizontal > .swiper-pagination-bullets,
+  .swiper-pagination-bullets.swiper-pagination-horizontal {
+    bottom: -16px !important;
+  }
+  .mySwiper .swiper-pagination-bullet {
+    top: unset !important;
+    background-color: rgba(217, 217, 217, 1); /* Yellow dots */
+    width: 6px !important;
+    height: 6px !important;
+    transform: unset;
+    opacity: 1;
+    border-radius: 50%;
+  }
+  .swiper-slide.swiper-slide-visible.swiper-slide-prev {
+    top: unset !important;
+    transform: unset !important;
+    margin-right: 8px;
+  }
+  .swiper-slide.swiper-slide-visible.swiper-slide-next {
+    top: unset !important;
+    transform: unset !important;
+    margin-left: 8px;
+  }
+  .mySwiper .swiper-pagination-bullet-active {
+    background-color: rgba(253, 65, 70, 1); /* Brighter yellow for active dot */
+    width: 9px !important;
+    height: 9px !important;
+    opacity: 1;
+  }
+  .sticky-button {
+    position: fixed !important;
+    top: 20px;
+    right: 20px;
+    z-index: 1;
+    width: 300px !important;
+  }
+
+  .swiper {
+    overflow: visible;
+    width: 100%;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+  }
+
+  .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 75% !important;
+
+  }
+
+  .mySwiper2 .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 100% !important;
+  }
+
+  .mySwiper3 .swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 50% !important;
+    transform: unset;
+  }
+  .mySwiper3 {
+    .swiper-wrapper {
+      transform: unset;
+    }
+  }
+  .mySwiper2 {
+    .swiper-wrapper {
+      transform: unset;
+    }
+  }
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+  }
+
+  .grid-container {
+    display: grid;
+    gap: 16px; /* Adjust the gap between grid items as needed */
+
+    --num-columns: 1;
+    --num-rows: 1;
+
+    &.length-2 {
+      --num-columns: 2;
+      --num-rows: 1;
+    }
+
+    &.length-3 {
+      --num-columns: 2;
+      --num-rows: 2;
+    }
+
+    &.length-4 {
+      --num-columns: 3;
+      --num-rows: 2;
+    }
+
+    &.length-5 {
+      --num-columns: 3;
+      --num-rows: 2;
+    }
+
+    grid-template-columns: repeat(var(--num-columns), 1fr);
+    grid-template-rows: repeat(var(--num-rows), 1fr);
+  }
+
+  .grid-item {
+    /* Add styling for grid items */
+    padding: 16px;
+    border: 1px solid #ccc;
+  }
+
+  .images__row {
+    --bs-gutter-x: 0.5rem !important;
+    max-height: 258px;
+    .half__height {
+      max-height: 125px;
+      margin-top: 8px;
+      > img {
+        height: 125px !important;
+      }
+    }
+    .full__height {
+      max-height: 258px;
+      margin-top: 8px;
+      > img {
+        height: 258px !important;
+      }
+    }
+  }
+}

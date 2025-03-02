@@ -1,39 +1,30 @@
 "use client";
 
 import {
-    Badge,
-    Box,
-    Flex,
-    Grid,
-    GridItem,
-    Heading,
-    Image,
-    Skeleton,
-    Stack,
-    Text
+  Badge,
+  Box,
+  Flex,
+  Grid,
+  GridItem,
+  Heading,
+  Image,
+  Skeleton,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
 
 import ButtonComponent from "@/components/Buttons/Button";
 import { ProductSchema } from "@/app/_models/Product";
+import React from "react";
+import { useCart } from "@/app/_context/CartContext";
+import { useProductsContext } from "@/app/_context/ProductsContext";
 
 const ProductsItems: React.FC = () => {
-  const [products, setProducts] = useState<ProductSchema[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  //   const cardBg = useColorModeValue("white", "gray.700");
-  //   const cardBorder = useColorModeValue("gray.200", "gray.600");
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true);
-      const response = await fetch("/api/products");
-      const data = (await response.json()) as ProductSchema[];
-      setProducts(data);
-      setIsLoading(false);
-    };
-    fetchProducts();
-  }, []);
-
+  const { isLoading, products } = useProductsContext();
+  const { addToCart } = useCart(); // Access cart context
+  const handleAddToCart = (product: ProductSchema) => {
+    addToCart({ productId: product?._id }); // Add the product to cart
+  };
   if (isLoading) {
     return (
       <Grid
@@ -63,7 +54,7 @@ const ProductsItems: React.FC = () => {
       </Grid>
     );
   }
-
+console.log(products, "products")
   return (
     <Box p={{ base: 4, md: 8 }}>
       <Grid
@@ -155,6 +146,7 @@ const ProductsItems: React.FC = () => {
                 _hover={{ transform: "scale(1.02)" }}
                 transition="transform 0.2s"
                 disabled={product.stock === 0}
+                onClick={() => handleAddToCart(product)}
               >
                 {product.stock === 0 ? "Out of Stock" : "Add to Cart"}
               </ButtonComponent>

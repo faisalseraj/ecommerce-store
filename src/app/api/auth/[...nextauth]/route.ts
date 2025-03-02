@@ -26,9 +26,9 @@ const handler = NextAuth({
           user &&
           (await bcrypt.compare(credentials?.password as string, user.password))
         ) {
-          // Return a subset of the user's properties, including the id
+          // Return user object
           return {
-            id: user.id,
+            id: user._id.toString(), // Ensure ID is a string
             email: user.email,
             phoneNumber: user.phoneNumber,
             fullName: user.fullName,
@@ -46,20 +46,21 @@ const handler = NextAuth({
   },
   callbacks: {
     async jwt({ token, user }) {
-      // Save user information in JWT token
+     
       if (user) {
         token.email = user.email;
-        (token as unknown as IUser).phoneNumber = (user as IUser).phoneNumber;
-        (token as unknown as IUser).fullName = (user as IUser).fullName;
+        token.phoneNumber = (user as any)?.phoneNumber; // Direct assignment
+        token.id = user.id; // Use user.id directly
+        token.fullName = (user as any)?.fullName;
       }
       return token;
     },
     async session({ session, token }) {
       if (!session?.user) return session;
-      // Attach token attributes to the session
       session.user.email = token.email;
-      (session.user as IUser).phoneNumber = token.phoneNumber as string;
-      (session.user as IUser).fullName = token.fullName as string;
+      (session.user as any).phoneNumber = token.phoneNumber; // Direct assignment
+      (session.user as any).id = token.id; // Ensure this exists
+      (session.user as any).fullName = token.fullName; // Ensure this exists
       return session;
     },
   },

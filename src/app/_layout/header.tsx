@@ -3,16 +3,32 @@
 import "@/components/Buttons/BorderAnimation/style.css";
 
 import { Badge, Button, Flex, IconButton, Image, Link } from "@chakra-ui/react";
+import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
+import CartModal from "../_components/Cart/CartModal";
 import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from "../_context/CartContext";
 import { usePathname } from "next/navigation"; // Next.js 15 navigation hook
 
 const Header = () => {
+  const { cart } = useCart();
   const currentPath = usePathname();
-
+  const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   // Helper function to check active path
   const isActive = (path: string) => currentPath === path;
+  const onSignout = async () => {
+    setIsLoading(true);
+    await signOut();
+    setIsLoading(false);
+  };
+  const onOpenChange = () => {
+    setIsOpen(!isOpen);
+  };
 
+  console.log(cart, "cart")
   return (
     <Flex
       as="header"
@@ -26,6 +42,9 @@ const Header = () => {
       top="0"
       zIndex="sticky"
     >
+      {isOpen ? (
+        <CartModal isOpen={isOpen} onOpenChange={onOpenChange} />
+      ) : null}
       {/* Logo */}
       <Link
         href="/"
@@ -73,35 +92,51 @@ const Header = () => {
         >
           Contact
         </Link>
-
         {/* Cart Icon */}
-        <IconButton
-          aria-label="Cart"
-          variant="ghost"
-          position="relative"
-          fontSize="xl"
-        >
-          <FaShoppingCart />
-          <Badge
-            position="absolute"
-            top="-2px"
-            right="-2px"
-            colorScheme="red"
-            borderRadius="full"
+        {(session?.user as any)?.email ? (
+          <>
+            <IconButton
+              aria-label="Cart"
+              variant="ghost"
+              position="relative"
+              fontSize="xl"
+              onClick={onOpenChange}
+            >
+              <FaShoppingCart />
+              <Badge
+                position="absolute"
+                top="-2px"
+                right="-2px"
+                colorScheme="red"
+                borderRadius="full"
+              >
+                {cart?.length}
+              </Badge>
+            </IconButton>
+            <Button
+              colorScheme="gray"
+              variant="outline"
+              size="sm"
+              loading={isLoading}
+              onClick={onSignout}
+              _hover={{ bg: "gray.100" }}
+            >
+              Logout
+            </Button>
+          </>
+        ) : (
+          <Link
+            className={`border-animate-btn ${
+              isActive("/contact") ? "border-animate-btn-active" : ""
+            }`}
+            href="/auth/signin"
+            fontWeight="500"
           >
-            3
-          </Badge>
-        </IconButton>
+            Login
+          </Link>
+        )}
 
         {/* Logout Button */}
-        <Button
-          colorScheme="gray"
-          variant="outline"
-          size="sm"
-          _hover={{ bg: "gray.100" }}
-        >
-          Logout
-        </Button>
       </Flex>
     </Flex>
   );

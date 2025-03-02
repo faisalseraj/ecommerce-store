@@ -2,6 +2,7 @@ import mongoose, { Document, Model } from "mongoose";
 
 import bcrypt from "bcrypt";
 
+export type IRole = "admin" | "superadmin" | "buyer" | "seller";
 export interface IUser extends Document {
   id: string;
   _id: string;
@@ -12,6 +13,7 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   fullName: string;
+  role: IRole;
   comparePassword(password: string): Promise<boolean>;
 }
 
@@ -24,6 +26,7 @@ const UserSchema = new mongoose.Schema<IUser>(
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     fullName: { type: String },
+    role: { type: String, required: true },
   },
   { timestamps: true }
 );

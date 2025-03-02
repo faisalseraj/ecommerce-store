@@ -8,6 +8,9 @@ import ButtonComponent from "@/components/Buttons/Button";
 import DialogComponent from "@/components/Modal/DialogComponent";
 import InputComponent from "@/components/Inputs/CustomInputField";
 import { ProductSchema } from "@/app/_models/Product";
+import axiosInstance from "@/app/_utils/axiosInstance";
+import { useMutation } from "@tanstack/react-query";
+import { useProductsContext } from "@/app/_context/ProductsContext";
 
 const AddProduct: React.FC = () => {
   const [newProduct, setNewProduct] = useState<Partial<ProductSchema>>({
@@ -23,16 +26,19 @@ const AddProduct: React.FC = () => {
     isInStock: true,
   });
   const [isOpen, setIsOpen] = useState(false); // Manage dialog open/close state
-  const [isLoading, setIsLoading] = useState(false); // Manage dialog open/close state
+  const { refetchProducts } = useProductsContext();
 
-  const handleAddProduct = async () => {
-    setIsLoading(true);
-    const response = await fetch("/api/products", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newProduct),
-    });
-    if (response.ok) {
+  const { mutate: handleAddProduct, isPending } = useMutation({
+    mutationFn: async () => {
+      const response = await axiosInstance("/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        data: JSON.stringify(newProduct),
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      refetchProducts();
       setNewProduct({
         name: "",
         description: "",
@@ -45,10 +51,12 @@ const AddProduct: React.FC = () => {
         variants: [],
         isInStock: true,
       });
-      setIsOpen(false); // Close the dialog
-    }
-    setIsLoading(false);
-  };
+      console.log(`Product added `);
+    },
+    onError: () => {
+      console.error("Failed to add product");
+    },
+  });
 
   const handleOpenChange = (details: { isOpen: boolean }) => {
     setIsOpen(details.isOpen);
@@ -187,7 +195,7 @@ const AddProduct: React.FC = () => {
             <DialogFooter>
               <DialogActionTrigger asChild>
                 <ButtonComponent
-                  isLoading={isLoading}
+                  isLoading={isPending}
                   className="neon-btn"
                   onClick={() => setIsOpen(false)}
                 >
@@ -196,9 +204,9 @@ const AddProduct: React.FC = () => {
               </DialogActionTrigger>
 
               <ButtonComponent
-                isLoading={isLoading}
+                isLoading={isPending}
                 className="gradient-btn"
-                onClick={handleAddProduct}
+                onClick={() => handleAddProduct()}
               >
                 Add Product
               </ButtonComponent>

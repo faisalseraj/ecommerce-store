@@ -1,8 +1,17 @@
+"use client";
+
 import "./globals.css";
 
-import { Provider } from "@/components/ui/provider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-export default function RootLayout({
+import { CartProvider } from "./_context/CartContext";
+import { Provider } from "@/components/ui/provider";
+import { SessionProvider } from "next-auth/react";
+import { Toaster } from "@/components/ui/toaster";
+
+const queryClient = new QueryClient();
+
+function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -10,8 +19,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Provider>{children}</Provider>
+        <QueryClientProvider client={queryClient}>
+          <SessionProvider>
+            <CartProvider>
+              <Provider>
+                <Toaster />
+
+                {children}
+              </Provider>
+            </CartProvider>
+          </SessionProvider>
+        </QueryClientProvider>
       </body>
     </html>
   );
 }
+export default RootLayout;

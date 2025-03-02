@@ -1,13 +1,24 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
+// Define the Cart Schema
 const CartSchema = new mongoose.Schema(
-    {
-        user_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-        product_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
-        quantity: { type: Number, default: 1 },
-    },
-    { timestamps: true }
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    }, // Renamed for consistency
+    productId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+      required: true,
+    }, // Updated to match naming convention
+    quantity: { type: Number, default: 1 },
+  },
+  { timestamps: true } // This will automatically add `createdAt` and `updatedAt` fields
 );
 
-const Cart = mongoose.model('Cart', CartSchema);
+// Create the model
+const Cart = mongoose.models.Cart || mongoose.model("Cart", CartSchema); // Preventing overwrite error by checking the existing model
+
 export default Cart;

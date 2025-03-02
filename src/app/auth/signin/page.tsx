@@ -2,6 +2,8 @@
 
 import "./styles/style.css";
 
+import ButtonComponent from "@/components/Buttons/Button";
+import InputComponent from "@/components/Inputs/CustomInputField";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 
@@ -37,31 +39,47 @@ const SignInPage = () => {
         <div className="user_options-text">
           <div className={`user_options-unregistered `}>
             <h2 className="user_unregistered-title">Don't have an account?</h2>
-            <p className="user_unregistered-text">Explore amazing features. Sign up now!</p>
-            <button className="user_unregistered-signup" onClick={() => setIsLogin(false)}>
+            <p className="user_unregistered-text">
+              Explore amazing features. Sign up now!
+            </p>
+            <button
+              className="user_unregistered-signup"
+              onClick={() => setIsLogin(false)}
+            >
               Sign up
             </button>
           </div>
 
           <div className={`user_options-registered `}>
             <h2 className="user_registered-title">Have an account?</h2>
-            <p className="user_registered-text">Welcome back! Login to continue!</p>
-            <button className="user_registered-login" onClick={() => setIsLogin(true)}>
+            <p className="user_registered-text">
+              Welcome back! Login to continue!
+            </p>
+            <button
+              className="user_registered-login"
+              onClick={() => setIsLogin(true)}
+            >
               Login
             </button>
           </div>
         </div>
 
-        <div className={`user_options-forms ${isLogin ? "bounceRight" : "bounceLeft"}`} id="user_options-forms">
+        <div
+          className={`user_options-forms ${
+            isLogin ? "bounceRight" : "bounceLeft"
+          }`}
+          id="user_options-forms"
+        >
           <div className={`user_forms-login ${isLogin ? "visible" : "hidden"}`}>
             <h2 className="forms_title">Login</h2>
             <form className="forms_form" onSubmit={handleSubmit}>
               <fieldset className="forms_fieldset">
                 <div className="forms_field">
-                  <input
-                    type="email"
+                  <InputComponent
+                    size={"sm"}
+                    label="Email"
                     placeholder="Email"
-                    className="forms_field-input"
+                    // className="forms_field-input"
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -69,9 +87,11 @@ const SignInPage = () => {
                   />
                 </div>
                 <div className="forms_field">
-                  <input
+                  <InputComponent
+                    size={"sm"}
                     type="password"
                     placeholder="Password"
+                    label="Password"
                     className="forms_field-input"
                     required
                     value={password}
@@ -83,19 +103,29 @@ const SignInPage = () => {
                 <button type="button" className="forms_buttons-forgot">
                   Forgot password?
                 </button>
-                <input type="submit" value="Log In" className="forms_buttons-action" />
+                <ButtonComponent
+                  width={"100%"}
+                  type="submit"
+                  className="btn-3d"
+                >
+                  Login
+                </ButtonComponent>
               </div>
               {error && <div style={{ color: "red" }}>{error}</div>}
             </form>
           </div>
 
-          <div className={`user_forms-signup ${!isLogin ? "visible" : "hidden"}`}>
+          <div
+            className={`user_forms-signup ${!isLogin ? "visible" : "hidden"}`}
+          >
             <h2 className="forms_title">Sign Up</h2>
             <form className="forms_form" onSubmit={handleSubmit}>
               <fieldset className="forms_fieldset">
                 <div className="forms_field">
-                  <input
+                  <InputComponent
+                    size={"sm"}
                     type="text"
+                    label="Full Name"
                     placeholder="Full Name"
                     className="forms_field-input"
                     required
@@ -104,9 +134,11 @@ const SignInPage = () => {
                   />
                 </div>
                 <div className="forms_field">
-                  <input
+                  <InputComponent
+                    size={"sm"}
                     type="email"
                     placeholder="Email"
+                    label="Email"
                     className="forms_field-input"
                     required
                     value={email}
@@ -114,9 +146,11 @@ const SignInPage = () => {
                   />
                 </div>
                 <div className="forms_field">
-                  <input
+                  <InputComponent
+                    size={"sm"}
                     type="password"
                     placeholder="Password"
+                    label="Password"
                     className="forms_field-input"
                     required
                     value={password}
@@ -125,7 +159,9 @@ const SignInPage = () => {
                 </div>
               </fieldset>
               <div className="forms_buttons">
-                <input type="submit" value="Sign up" className="forms_buttons-action" />
+                <ButtonComponent type="submit" className="btn-3d">
+                  Sign up
+                </ButtonComponent>
               </div>
             </form>
           </div>

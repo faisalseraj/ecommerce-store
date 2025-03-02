@@ -14,6 +14,7 @@ export interface Variant {
 
 export interface ProductSchema extends Document {
     name: string;
+    _id: string;
     description: string;
     price: number;
     category: string;
