@@ -9,6 +9,7 @@ import {
 
 import { ProductSchema } from "../_models/Product";
 import axiosInstance from "../_utils/axiosInstance";
+import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 interface CartItem {
@@ -82,6 +83,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({
     address: "",
     email: "",
   });
+  const currentPath = usePathname();
 
   const user = session?.user as any;
   const userId = user?.id;
@@ -91,7 +93,7 @@ const CartProvider: React.FC<{ children: React.ReactNode }> = ({
       const response = await axiosInstance.get(`/cart?userId=${userId}`);
       return response.data; // Assuming response.data contains the cart items
     },
-    enabled: userId !== undefined,
+    enabled: userId !== undefined && currentPath === '/products',
   });
 
   const { mutate: addToCart, isPending } = useMutation({

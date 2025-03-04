@@ -17,10 +17,17 @@ export async function POST(req: Request) {
     );
   }
 
-  const { email, password, phoneNumber, firstName, lastName } = body;
+  const { email, password, phoneNumber, firstName, lastName, role } = body;
 
   try {
-    await User.create({ email, password, phoneNumber, firstName, lastName });
+    await User.create({
+      email,
+      password,
+      phoneNumber,
+      firstName,
+      lastName,
+      role,
+    });
     return NextResponse.json(
       { message: "User created successfully!" },
       { status: 201 }

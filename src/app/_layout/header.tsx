@@ -28,7 +28,6 @@ const Header = () => {
     setIsOpen(!isOpen);
   };
 
-  console.log(cart, "cart")
   return (
     <Flex
       as="header"
@@ -113,16 +112,17 @@ const Header = () => {
                 {cart?.length}
               </Badge>
             </IconButton>
-            <Button
-              colorScheme="gray"
-              variant="outline"
-              size="sm"
-              loading={isLoading}
-              onClick={onSignout}
-              _hover={{ bg: "gray.100" }}
+
+            <Link
+              className={`border-animate-btn ${
+                isActive("/contact") ? "border-animate-btn-active" : ""
+              }`}
+              href="/auth/signout"
+              fontWeight="500"
             >
               Logout
-            </Button>
+            </Link>
+
           </>
         ) : (
           <Link

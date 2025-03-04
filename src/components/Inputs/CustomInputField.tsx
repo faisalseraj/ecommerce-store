@@ -1,6 +1,6 @@
 "use client"; // Allowing the use of React hooks
 
-import { Field, Input, InputProps, Stack } from "@chakra-ui/react";
+import { Field, Input, InputProps, Stack, Textarea } from "@chakra-ui/react";
 import { PasswordInput, PasswordStrengthMeter } from "../ui/password-input";
 
 import { Checkbox } from "../ui/checkbox";
@@ -8,7 +8,9 @@ import { Field as CustomField } from "@/components/ui/field";
 
 interface CustomInputProps extends InputProps {
   label: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
   required?: boolean;
   helperText?: string;
 }
@@ -27,7 +29,20 @@ const InputComponent: React.FC<CustomInputProps> = ({
 }) => {
   return (
     <CustomField mt={mt} label={label} helperText={helperText}>
-      {type === "password" ? (
+      {type === "textarea" ? (
+        <Textarea
+          p={2}
+          border={"1px solid lightgray"}
+          _focus={{
+            border: "1px solid gray",
+          }}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          required={required}
+          {...rest as any}
+        />
+      ) : type === "password" ? (
         <Stack w={"100%"}>
           <PasswordInput
             p={2}
@@ -57,6 +72,7 @@ const InputComponent: React.FC<CustomInputProps> = ({
           _focus={{
             border: "1px solid gray",
           }}
+          type="area"
           placeholder={placeholder}
           value={value}
           onChange={onChange}

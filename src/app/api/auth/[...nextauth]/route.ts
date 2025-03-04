@@ -32,6 +32,7 @@ const handler = NextAuth({
             email: user.email,
             phoneNumber: user.phoneNumber,
             fullName: user.fullName,
+            user: user,
           };
         }
         throw new Error("Invalid credentials");
@@ -48,6 +49,7 @@ const handler = NextAuth({
     async jwt({ token, user }) {
      
       if (user) {
+        token.user = user;
         token.email = user.email;
         token.phoneNumber = (user as any)?.phoneNumber; // Direct assignment
         token.id = user.id; // Use user.id directly
@@ -60,6 +62,7 @@ const handler = NextAuth({
       session.user.email = token.email;
       (session.user as any).phoneNumber = token.phoneNumber; // Direct assignment
       (session.user as any).id = token.id; // Ensure this exists
+      (session.user as any).user = token.user; // Ensure this exists
       (session.user as any).fullName = token.fullName; // Ensure this exists
       return session;
     },
